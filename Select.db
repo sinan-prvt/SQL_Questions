@@ -1,0 +1,99 @@
+CREATE TABLE employee (
+    emp_id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT,
+    hire_date DATE
+);
+
+INSERT INTO employee(name, department, salary, hire_date)
+VALUES('sinan','IT', 60000, '2020-01-10'),
+      ('nishad','Hr', 50000, '2020-04-21'),
+      ('affan','finance', 40000, '2020-06-30'),
+      ('afnas','IT', 20000, '2020-02-01'),
+      ('fazlu','G-sap', 210000, '2020-12-13'),
+      ('vishnu','React', 93000, '2020-10-28');
+
+
+#------ Basic
+
+SELECT * FROM employee                                              # Select all columns
+
+SELECT name, department FROM employee                               # Select Specific columns
+
+
+#------ Filtering with WHERE
+
+SELECT * FROM employee                                              # Employees in IT department
+WHERE department = 'IT'
+
+SELECT * FROM employee                                              # Employees with salary greater than 50,000
+WHERE salary > 50000
+
+
+#------ Sorting Results
+
+SELECT * FROM employee                                              # Highest Salary First
+ORDER BY salary DESC
+
+SELECT * FROM employee                                              # Earliest joining first
+ORDER BY hire_date ASC
+
+
+#------- Aggregates
+
+SELECT COUNT(*) FROM employee                                       # Count employees
+
+SELECT MAX(salary) AS Maximum_Salary FROM employee                  # Maximum Salary
+
+SELECT AVG(salary) avg_it_salary                                    # Average salary in IT
+FROM employee
+WHERE department = 'IT'
+
+
+#------ Grouping
+
+SELECT department, COUNT(*) AS total_emp                            # Number of employees per department
+FROM employee
+GROUP BY department
+
+SELECT department, SUM(*) AS total_salary                           # Total salary per department
+FROM employee
+GRUOP BY department
+
+
+#------ Having
+
+SELECT department, COUNT(*) AS total_emp                            # Departments with more than 1 employee
+FROM employee
+GROUP BY department
+HAVING COUNT(*) > 1;
+
+
+#------ Like and Between
+
+SELECT * FROM employee                                              # Names starting with 'a'
+WHERE name LIKE 'A%';
+
+SELECT * FROM employee                                              # Employees joined between Feb and Oct 2020
+WHERE hire_date BETWEEN '2020-02-01' AND '2020-10-31';
+
+
+#------ Aliases
+
+SELECT name AS emp_name, salary AS monthly_salary                   # Named name as emp_name and salary as monthly_salary
+FROM employee
+
+
+#------ Subquery
+
+SELECT name, salary                                                 # Employees with salary above average
+FROM employee
+WHERE salary > (SELECT AVG(salary) FROM employee);
+
+
+#------ Window Function
+
+SELECT name, department, salary,                                    # Rank employees by salary
+RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employee;
