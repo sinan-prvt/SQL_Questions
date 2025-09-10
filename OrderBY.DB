@@ -60,7 +60,7 @@ ORDER BY
 
 SELECT name, salary                                     # Put NULL salaries at the end
 FROM employee
-ORDER BY salary NULL LAST;
+ORDER BY salary NULLS LAST;
 
 
 SELECT name, salary                                     # Put NULL salaries at the start
