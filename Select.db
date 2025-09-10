@@ -17,49 +17,54 @@ VALUES('sinan','IT', 60000, '2020-01-10'),
 
 #------ Basic
 
-SELECT * FROM employee                                              # Select all columns
+SELECT * FROM employee;                                             # Select all columns
 
-SELECT name, department FROM employee                               # Select Specific columns
+SELECT name, department FROM employee;                              # Select Specific columns
 
 
 #------ Filtering with WHERE
 
 SELECT * FROM employee                                              # Employees in IT department
-WHERE department = 'IT'
+WHERE department = 'IT';
 
 SELECT * FROM employee                                              # Employees with salary greater than 50,000
-WHERE salary > 50000
+WHERE salary > 50000;
+
+
+#------- Distinct with Select
+
+SELECT DISTINCT department FROM employee;                           # Get unique departments
 
 
 #------ Sorting Results
 
 SELECT * FROM employee                                              # Highest Salary First
-ORDER BY salary DESC
+ORDER BY salary DESC;
 
 SELECT * FROM employee                                              # Earliest joining first
-ORDER BY hire_date ASC
+ORDER BY hire_date ASC;
 
 
 #------- Aggregates
 
-SELECT COUNT(*) FROM employee                                       # Count employees
+SELECT COUNT(*) FROM employee;                                      # Count employees
 
-SELECT MAX(salary) AS Maximum_Salary FROM employee                  # Maximum Salary
+SELECT MAX(salary) AS Maximum_Salary FROM employee;                 # Maximum Salary
 
 SELECT AVG(salary) avg_it_salary                                    # Average salary in IT
 FROM employee
-WHERE department = 'IT'
+WHERE department = 'IT';
 
 
 #------ Grouping
 
 SELECT department, COUNT(*) AS total_emp                            # Number of employees per department
 FROM employee
-GROUP BY department
+GROUP BY department;
 
 SELECT department, SUM(*) AS total_salary                           # Total salary per department
 FROM employee
-GRUOP BY department
+GRUOP BY department;
 
 
 #------ Having
@@ -82,7 +87,7 @@ WHERE hire_date BETWEEN '2020-02-01' AND '2020-10-31';
 #------ Aliases
 
 SELECT name AS emp_name, salary AS monthly_salary                   # Named name as emp_name and salary as monthly_salary
-FROM employee
+FROM employee;
 
 
 #------ Subquery
@@ -96,4 +101,22 @@ WHERE salary > (SELECT AVG(salary) FROM employee);
 
 SELECT name, department, salary,                                    # Rank employees by salary
 RANK() OVER (ORDER BY salary DESC) AS salary_rank
+FROM employee;
+
+
+#------ Limit with Order by
+
+SELECT * FROM employee                                              # Get top 3 highest paid employees
+ORDER BY salary DESC
+LIMIT 3;
+
+
+#----- Case with select
+
+SELECT name, salary,
+    CASE
+        WHEN salary >= 70000 THEN 'High'
+        WHEN salary >= 60000 THEN 'Medium'
+        ELSE 'Low'
+    END AS salary_level
 FROM employee;
