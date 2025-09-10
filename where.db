@@ -34,7 +34,7 @@ WHERE salary <= 50000;
 #--------- WHERE with Multiple Conditions
 
 
-SELECT * FROM employee                                      #  IT employees with salary above 50,000
+SELECT * FROM employee                                      # IT employees with salary above 50,000
 WHERE department = 'IT' AND salary > 50000;
 
 

@@ -1,0 +1,92 @@
+CREATE TABLE employee (
+    emp_id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT,
+    hire_date DATE
+);
+
+INSERT INTO employee(name, department, salary, hire_date)
+        VALUES('sinan','IT', 60000, '2020-01-10'),
+            ('nishad','Hr', 50000, '2020-04-21'),
+            ('affan','finance', 40000, '2020-06-30'),
+            ('afnas','IT', 20000, '2020-02-01'),
+            ('fazlu','G-sap', 210000, '2020-12-13'),
+            ('vishnu','React', 93000, '2020-10-28');
+
+
+#------ Basic
+
+SELECT * FROM employee                                  # Employees sorted by salary (lowest → highest)
+ORDER BY salary;
+
+SELECT * FROM employee                                  # Employees sorted by salary (highest → lowest)
+ORDER BY salary DESC;
+
+
+#----- Order By Multiple Columns
+
+SELECT * FROM employee                                  # Sort by department first, then salary (highest first within each dept)
+ORDER BY department ASC, salary DESC;
+
+
+#----- Order By with Aliases
+
+SELECT name, salary, (salary * 12) AS yearly_salary     # Use alias in ORDER BY
+FROM employee
+ORDER BY yearly_salary DESC;
+
+
+#----- Order By with Expressions
+
+SELECT name, LENGTH(name) AS name_length                # Sort by the length of employee name
+FROM employee
+ORDER BY LENGTH(name) ASC;
+
+
+#----- Order By with CASE
+
+SELECT name, department                                 # Custom sorting: IT first, then HR, then others
+FROM employee
+ORDER BY 
+    CASE department
+        WHEN 'IT' THEN 1
+        WHEN 'Hr' THEN 2
+        ELSE 3
+    END;
+
+
+#----- Order By with NULL Handling
+
+SELECT name, salary                                     # Put NULL salaries at the end
+FROM employee
+ORDER BY salary NULL LAST;
+
+
+SELECT name, salary                                     # Put NULL salaries at the start
+FROM employee
+ORDER BY salary NULLS FIRST;
+
+
+
+#----- Order By with LIMIT
+
+SELECT * FROM employee                                  # Top 3 highest paid employees
+ORDER BY salary DESC
+LIMIT 3;
+
+
+#----- Order By with Subquery
+
+SELECT name, salary                                     # Employees above average salary, ordered by salary
+FROM employee
+WHERE salary > (SELECT AVG(salary) FROM employee)
+ORDER BY salary DESC;
+
+
+#----- Order By with Window Functions
+
+SELECT name, salary,                                     # Rank employees by salary
+    RANK() OVER(ORDER BY salary DESC) AS salary_rank
+FROM employee
+ORDER BY salary_rank;
