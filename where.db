@@ -1,0 +1,121 @@
+CREATE TABLE employee (
+    emp_id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT,
+    hire_date DATE
+);
+
+INSERT INTO employee(name, department, salary, hire_date)
+        VALUES('sinan','IT', 60000, '2020-01-10'),
+            ('nishad','Hr', 50000, '2020-04-21'),
+            ('affan','finance', 40000, '2020-06-30'),
+            ('afnas','IT', 20000, '2020-02-01'),
+            ('fazlu','G-sap', 210000, '2020-12-13'),
+            ('vishnu','React', 93000, '2020-10-28');
+
+#--------- Basic
+
+
+SELECT * FROM employee                                      # Employees from IT department
+WHERE department = 'IT';
+
+
+#------ WHERE with Comparison Operators
+
+SELECT * FROM employee                                      # Salary greater than 50,000
+WHERE salary > 50000;
+
+
+SELECT * FROM employee                                      # Salary less than or equal to 50,000
+WHERE salary <= 50000;
+
+
+#--------- WHERE with Multiple Conditions
+
+
+SELECT * FROM employee                                      #  IT employees with salary above 50,000
+WHERE department = 'IT' AND salary > 50000;
+
+
+SELECT * FROM employee                                      # HR or Finance employees
+WHERE department = 'Hr' OR department = 'finance';
+
+
+
+#------- WHERE with IN
+
+SELECT * FROM employee                                      # Employees in IT or React department
+WHERE department IN ('IT' , 'React');
+
+
+
+#-------- WHERE with NOT IN
+
+SELECT * FROM employee                                      # Employees not in IT department
+WHERE department NOT IN ('IT');
+
+
+
+#------ WHERE with BETWEEN
+
+SELECT * FROM employee                                      # Employees with salary between 40,000 and 90,000
+WHERE salary BETWEEN 40000 AND 90000;
+
+
+SELECT * FROM employee                                      # Employees hired between Feb and Oct 2020
+WHERE hire_date BETWEEN '2020-02-01' AND '2020-10-31'
+
+
+
+#------ WHERE with LIKE (Pattern Matching)
+
+
+SELECT * FROM employee                                      # Names starting with 'a'
+WHERE name LIKE 'a%';
+
+SELECT * FROM employee                                      #  Names ending with 'n'
+WHERE name LIKE '%a';
+
+SELECT * FROM employee                                      # Names containing 'an'
+WHERE name LIKE '%an%';
+
+
+
+#------- WHERE with IS NULL / IS NOT NULL
+
+SELECT * FROM employee                                      # Employees without department assigned
+WHERE department IS NULL;
+
+
+SELECT * FROM employee                                      # Employees with a department assigned
+WHERE department IS NOT NULL;
+
+
+
+#------- WHERE with Subquery
+
+SELECT * FROM employee                                      # Employees earning more than the average salary
+WHERE salary > (SELECT AVG(salary) FROM employee);
+
+
+
+#------ WHERE with ANY / ALL
+
+SELECT * FROM employee                                                               # Employees with salary greater than ANY salary in IT
+WHERE salary > ANY (SELECT salary FROM employee WHERE department = 'IT');
+
+
+SELECT * FROM employee                                                                # Employees with salary greater than ALL salaries in IT
+WHERE salary > ALL (SELECT salary FROM employee WHERE department = 'IT');
+
+
+
+#------- WHERE with CASE
+
+SELECT * FROM employee                                         # Filter only employees categorized as High salary
+WHERE 
+    CASE 
+        WHEN salary >= 70000 THEN 'HIGH'
+        ELSE 'OTHER'
+    END = 'HIGH';

@@ -7,12 +7,12 @@ CREATE TABLE employee (
 );
 
 INSERT INTO employee(name, department, salary, hire_date)
-VALUES('sinan','IT', 60000, '2020-01-10'),
-      ('nishad','Hr', 50000, '2020-04-21'),
-      ('affan','finance', 40000, '2020-06-30'),
-      ('afnas','IT', 20000, '2020-02-01'),
-      ('fazlu','G-sap', 210000, '2020-12-13'),
-      ('vishnu','React', 93000, '2020-10-28');
+        VALUES('sinan','IT', 60000, '2020-01-10'),
+            ('nishad','Hr', 50000, '2020-04-21'),
+            ('affan','finance', 40000, '2020-06-30'),
+            ('afnas','IT', 20000, '2020-02-01'),
+            ('fazlu','G-sap', 210000, '2020-12-13'),
+            ('vishnu','React', 93000, '2020-10-28');
 
 
 #------ Basic
@@ -62,7 +62,7 @@ SELECT department, COUNT(*) AS total_emp                            # Number of 
 FROM employee
 GROUP BY department;
 
-SELECT department, SUM(*) AS total_salary                           # Total salary per department
+SELECT department, SUM(salary) AS total_salary                      # Total salary per department
 FROM employee
 GRUOP BY department;
 
@@ -113,7 +113,7 @@ LIMIT 3;
 
 #----- Case with select
 
-SELECT name, salary,
+SELECT name, salary,                                                # add high, medium, low with case
     CASE
         WHEN salary >= 70000 THEN 'High'
         WHEN salary >= 60000 THEN 'Medium'
