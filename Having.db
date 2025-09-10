@@ -1,0 +1,89 @@
+CREATE TABLE employee (
+    emp_id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT,
+    hire_date DATE
+);
+
+INSERT INTO employee(name, department, salary, hire_date)
+        VALUES('sinan','IT', 60000, '2020-01-10'),
+            ('nishad','Hr', 50000, '2020-04-21'),
+            ('affan','finance', 40000, '2020-06-30'),
+            ('afnas','IT', 20000, '2020-02-01'),
+            ('fazlu','G-sap', 210000, '2020-12-13'),
+            ('vishnu','React', 93000, '2020-10-28');
+
+
+
+#----- Basic
+
+SELECT department, COUNT(*) AS total_emp                            # Departments with more than 1 employee
+FROM employee
+GROUP BY department
+HAVING COUNT(*) > 1;
+
+
+
+#-------- Having with Sum
+
+SELECT department, SUM(salary) AS total_salary                      # Departments where total salary > 100,000
+FROM employee
+GROUP BY department
+HAVING SUM(salary) > 100000;
+
+
+#-------- Having with AVG
+
+SELECT department, AVG(salary) AS avg_salary                        # Departments with average salary greater than 60,000
+FROM employee   
+GROUP BY department
+HAVING AVG(salary) > 60000;
+
+
+#-------- Having with Multiple Conditions
+
+SELECT department, COUNT(*) AS emp_count, SUM(salary) AS t_salary   # Departments with more than 1 employee AND total salary above 50,000
+FROM employee
+GROUP BY department
+HAVING COUNT(*) > 1 AND SUM(salary) > 50000;
+
+
+#-------- Having without GROUP BY
+
+SELECT SUM(salary) AS company_salary                                # Check if total company salary > 400,000
+FROM employee
+HAVING SUM(salary) > 400000;
+
+
+#-------- Having with WHERE
+
+SELECT department, SUM(salary) AS total_salary                      # IT employees only, grouped by department, with salary total > 70,000
+FROM employee   
+WHERE department = 'IT'
+GROUP BY department
+HAVING SUM(salary) > 70000;
+
+
+#-------- Having with CASE
+
+SELECT                                                              # Salary categories where total employees > 1
+    CASE
+        WHEN salary >= 70000 THEN 'High'
+        WHEN salary >= 50000 THEN 'Medium'
+        ELSE 'Low'
+    END AS salary_group,
+    COUNT(*) AS emp_count
+FROM employee
+GROUP BY salary_group
+HAVING COUNT(*) > 1;
+
+
+#-------- Having with Subquery
+
+SELECT department, SUM(salary) AS dept_salary                       # Departments where total salary > average salary of all employees
+FROM employee
+GROUP BY department
+HAVING SUM(salary) > (SELECT AVG(salary) FROM employee);
+
+
