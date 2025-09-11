@@ -120,3 +120,9 @@ SELECT name, salary,                                                # add high, 
         ELSE 'Low'
     END AS salary_level
 FROM employee;
+
+
+
+SELECT department, AVG(salary) AS avg_salary                        # Find the average salary in each department.
+FROM employee
+GROUP BY department;
