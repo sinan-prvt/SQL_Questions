@@ -29,6 +29,15 @@ VALUES(101, 'IT'),
 SELECT * FROM department;
 
 
+#--------- Basic Join
+
+SELECT e.name, d.dep_name                                           # It behaves exactly like INNER JOIN.                             
+FROM employee e
+JOIN department d
+ON e.dep_id = d.dep_id;
+
+
+
 #---------- INNER JOIN
 
 SELECT e.name, d.dep_name                                           # Shows employees with their department (ignores vishnu + Testing). 
