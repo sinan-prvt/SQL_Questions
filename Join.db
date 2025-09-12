@@ -16,12 +16,66 @@ VALUES(1, 'sinan', 101),
       (4, 'afnas', 101),
       (5, 'fazlu', 104),
       (6, 'vishnu', NULL);
-    
-INSERT INTO department(dep_id, dep_name)                            # # Insert values in depatment
+
+SELECT * FROM employee;
+
+INSERT INTO department(dep_id, dep_name)                            # Insert values in depatment
 VALUES(101, 'IT'),
       (102, 'HR'),
       (103, 'Finance'),
       (104, 'React'),
       (105, 'Testing');
 
+SELECT * FROM department;
 
+
+#---------- INNER JOIN
+
+SELECT e.name, d.dep_name                                           # Shows employees with their department (ignores vishnu + Testing). 
+FROM employee e
+INNER JOIN department d
+ON e.dep_id = d.dep_id;
+
+
+#---------- LEFT JOIN
+
+SELECT e.name, d.dep_name                                           # Shows all employees. If no department → NULL
+FROM employee e
+LEFT JOIN department d
+ON e.emp_id = d.dep_id;
+
+
+
+#----------- RIGHT JOIN
+
+SELECT e.name, dep_name                                             # Shows all departments. If no employee → NULL
+FROM employee e
+RIGHT JOIN department d
+ON e.emp_id = d.dep_id;
+
+
+
+#----------- FULL OUTER JOIN
+
+SELECT e.name, d.dep_name                                           # Shows everything, matched and unmatched.
+FROM employee e
+FULL OUTER JOIN department d
+ON e.emp_id = d.dep_id;
+
+
+
+#------------- CROSS JOIN
+
+SELECT e.name, d.department_name                                    # Each employee is matched with all departments, regardless of dept_id.
+FROM employee e
+CROSS JOIN department d;
+
+
+
+#------------- SELF JOIN
+
+SELECT e1.name AS employee, e2.name AS colleague, e1.dept_id        # Find employees in the same department.
+FROM employee e1
+JOIN employee e2
+ON e1.dept_id = e2.dept_id
+AND e1.emp_id <> e2.emp_id;
