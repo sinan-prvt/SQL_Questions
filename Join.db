@@ -1,11 +1,27 @@
-CREATE TABLE employee (
+CREATE TABLE employee (                                             # Create employee table
     emp_id SERIAL PRIMARY KEY,
     name VARCHAR(50),
     dep_id INT
 );
 
-CREATE TABLE department (
+CREATE TABLE department (                                           # Create department table
     dep_id INT PRIMARY KEY,
     dep_name VARCHAR(50)
 );
+
+INSERT INTO employee(emp_id, name, dep_id)                          # Insert values in employee
+VALUES(1, 'sinan', 101),
+      (2, 'nishad', 102),
+      (3, 'affan', 103),
+      (4, 'afnas', 101),
+      (5, 'fazlu', 104),
+      (6, 'vishnu', NULL);
+    
+INSERT INTO department(dep_id, dep_name)                            # # Insert values in depatment
+VALUES(101, 'IT'),
+      (102, 'HR'),
+      (103, 'Finance'),
+      (104, 'React'),
+      (105, 'Testing');
+
 
