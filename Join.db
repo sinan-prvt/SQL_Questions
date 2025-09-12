@@ -1,0 +1,11 @@
+CREATE TABLE employee (
+    emp_id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    dep_id INT
+);
+
+CREATE TABLE department (
+    dep_id INT PRIMARY KEY,
+    dep_name VARCHAR(50)
+);
+
