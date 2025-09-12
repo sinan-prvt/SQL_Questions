@@ -1,0 +1,74 @@
+#=================== Single-row subquery
+
+#----- ( = )
+
+SELECT name, salary 
+FROM employee
+WHERE salary = (SELECT MAX(salary) FROM employee);
+
+
+#----- ( > )
+
+SELECT name, salary
+FROM employee
+WHERE salary > (SELECT AVG(salary) FROM employee);
+
+
+#----- ( < )
+
+SELECT name, salary
+FROM employee
+WHERE salary > (SELECT AVG(salary) FROM employee);
+
+
+#----- ( >= )
+
+SELECT name, salary
+FROM employee
+WHERE salary >= (SELECT MAX(salary) FROM employee WHERE dep_id = 101);
+
+
+#----- ( <= )
+
+SELECT name, salary
+FROM employee
+WHERE salary <= (SELECT MIN(salary) FROM employee WHERE dep_id = 102);
+
+
+#----- ( <> )
+
+SELECT name, salary
+FROM employee
+WHERE salary <> (SELECT MAX(salary) FROM employee);
+
+
+
+
+
+#=================== Multiple-row subquery
+
+
+#----- ( IN )
+
+SELECT name, dep_id
+FROM employee
+WHERE dep_id IN (SELECT dep_id FROM department WHERE dep_name IN ('IT', 'HR'));
+
+
+#----- ( ANY/SOME )
+
+SELECT name, salary
+FROM employee
+WHERE salary > ANY (SELECT salary FROM employee WHERE dep_id = 102);
+
+
+#----- ( ALL )
+
+SELECT name, salary
+FROM employee
+WHERE salary > ALL (SELECT salary FROM employee WHERE dep_id = 101);
+
+
+
+
+

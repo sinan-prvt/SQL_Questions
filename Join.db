@@ -66,7 +66,7 @@ ON e.emp_id = d.dep_id;
 
 #------------- CROSS JOIN
 
-SELECT e.name, d.department_name                                    # Each employee is matched with all departments, regardless of dept_id.
+SELECT e.name, d.dep_name                                             # Each employee is matched with all departments, regardless of dept_id.
 FROM employee e
 CROSS JOIN department d;
 
